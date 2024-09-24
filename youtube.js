@@ -22,10 +22,13 @@ fetch(url)
 	.then((data) => data.json())
 	.then((json) => {
 		// console.log(json);
+
 		const vidsData = json.items;
 		let tags = "";
 
 		vidsData.forEach((data) => {
+			// console.log(data);
+			// console.log(data.snippet.resourceId.videoId);
 			let title =
 				data.snippet.title.length > 60
 					? data.snippet.title.substring(0, 60) + "..."
@@ -40,7 +43,7 @@ fetch(url)
 
 			tags += `
       <article>
-        <h2 class="vidTitle">${title}</h2>
+        <h2 class="vidTitle" data-id=${data.snippet.resourceId.videoId}>${title}</h2>
 
         <div class="txt">
           <p>${desc}</p>
@@ -87,8 +90,11 @@ document.body.addEventListener("click", function (e) {
 
 	// body전체에 이벤트를 연결한 뒤 이벤트 발생한 실제대상을 조건문으로 분기처리해서
 	// 조건에 부합될때에만 원하는 구문 연결(이처럼 번거로운작업을 처리하지 않기 위해서 리액트같은 프레임웍, 라이브러리를 사용함)
+	const vidId = e.target.getAttribute("data-id");
+	// console.dir(e.target);
+
 	if (e.target.className === "vidTitle") {
-		console.log("you clicked VidTItle");
+		// console.log("you clicked VidTItle");
 		// 동적으로 aside로 모달창 생성
 		// 해당 모달창을 절대 innerHTML로 생성 불가
 		// innerHTML은 기존의 선택자 안쪽의 요소들을 다 지우고 새로운 요소들로 바꿔치기 하는 개념
@@ -98,10 +104,26 @@ document.body.addEventListener("click", function (e) {
 		// 동적 돔 객체를 메서드를 통해서 직접 생성
 		const asideEl = document.createElement("aside"); // aside라는 엘리먼트 노트를 직접 생성하는것
 
+		//aside라는 비어있는 엘리멘트요소 안쪽에 기존처럼 innerHTML원하는 요소 동적 생성.
+		asideEl.innerHTML = `
+      <div class="con">
+        <iframe src="http://www.youtube.com/embed/${vidId}" frameborder="0"></iframe>
+      </div>
+      <button class="btnClose">close</button>
+    `;
+		//append로 기존 요소 유지하면서 aside요소 추가 (인수로는 문자가 아닌 엘리멘트 노드 필요)
+
 		// body안쪽의 요소들을 그대로 유지하면서 동적으로 aside요소 추가
 		// document.body.append(asideEl); // 기존요소 유지하면서 뒤쪽에 추가
 
 		// 기존요소 유지하면서 앞쪽에 추가
-		document.body.prepend(asideEl);
+		// document.body.prepend(asideEl);
+		document.body.append(asideEl);
+	}
+});
+document.body.addEventListener("click", (e) => {
+	if (e.target.className === "btnClose") {
+		// display=none과는 다르게 물리적으로 DOM자체를 제거
+		document.querySelector("aside").remove();
 	}
 });
