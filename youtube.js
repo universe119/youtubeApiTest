@@ -40,7 +40,7 @@ fetch(url)
 
 			tags += `
       <article>
-        <h2>${title}</h2>
+        <h2 class="vidTitle">${title}</h2>
 
         <div class="txt">
           <p>${desc}</p>
@@ -53,7 +53,7 @@ fetch(url)
       </article>
       `;
 		});
-		console.log(tags);
+		// console.log(tags);
 		frame.innerHTML = tags;
 	});
 
@@ -64,5 +64,44 @@ fetch(url)
 
 // 위에 처럼 비동기적으로 발생하는 코드의 흐름을 강제적으로 동기적 처리
 // 코드 작성순서대로 순차적으로 실행되게 만드는 작업(동기화)
-const titles = document.querySelector("article h2");
-console.log(titles); // null값
+
+//아직 fetch문의 동작이 끝나지 않아서 article의 h2요소의 생성이 완료되지 않았는데
+//아직 없는 동적요소인 h2를 호출함으로써 발생하는 오류
+//해결 방법 : 이벤트 위임 (Event Delegate) : 항상 있는 요소에 일단은 이벤트를 맡겨놓았다가
+//동적 요소가 생성되면 그때 이벤트를 대신 전달해주는 방법
+
+//자바스크립트를 이용해서 동적으로 생선된 요소는 일반적인 방법으로 이벤트 연결이 불가
+// 동적인 요소가 만들어 지는 위치가 fetch함수의 then구문안쪽인데 그밖에서는 동적인 요소 선택 불가
+// 제일 간단한 해결 방법 : 동적생성요소찾는 구문을 돔을 생성하는 코드 블록 안쪽에서 호출
+// 위의 방법의 단점 : fetch함수 코드블록 안쪽에 또 다시 복잡한 이벤트 연결 로직을 작성해야 되기 떄문에 코드의 복잡도 증가
+// 기능별로 코드 분리가 불가능
+
+// 위와 같은 이유로 부득이하게 동적인 요소의 이벤트 연결을 fetch함수 밖에서 연결하는 경우가 많음
+// 이벤트위임: 지금 당장은 없는 DOM요소에 이벤트를 전달하기 위해서 항상 존재하는 요소에 이벤트를 맡겨서
+// 추후 동적요소가 생성완료되면 그때 이벤트를 대신 전달해주는 방식
+
+// 이벤트위임: 항상존재하는 body요소에 일단은 이벤트를 맡겼다가 동적요소가 생성완료되면 body가 대신 이벤트 전달
+
+document.body.addEventListener("click", function (e) {
+	// console.log(e.target);
+
+	// body전체에 이벤트를 연결한 뒤 이벤트 발생한 실제대상을 조건문으로 분기처리해서
+	// 조건에 부합될때에만 원하는 구문 연결(이처럼 번거로운작업을 처리하지 않기 위해서 리액트같은 프레임웍, 라이브러리를 사용함)
+	if (e.target.className === "vidTitle") {
+		console.log("you clicked VidTItle");
+		// 동적으로 aside로 모달창 생성
+		// 해당 모달창을 절대 innerHTML로 생성 불가
+		// innerHTML은 기존의 선택자 안쪽의 요소들을 다 지우고 새로운 요소들로 바꿔치기 하는 개념
+		// 지금 처럼 기존 목록요소를 모달만 추가하고자 할때는 적합하지 않음
+		// 해결 방법 : 부모선택자.append(동적 생성요소:돔객체)
+
+		// 동적 돔 객체를 메서드를 통해서 직접 생성
+		const asideEl = document.createElement("aside"); // aside라는 엘리먼트 노트를 직접 생성하는것
+
+		// body안쪽의 요소들을 그대로 유지하면서 동적으로 aside요소 추가
+		// document.body.append(asideEl); // 기존요소 유지하면서 뒤쪽에 추가
+
+		// 기존요소 유지하면서 앞쪽에 추가
+		document.body.prepend(asideEl);
+	}
+});
