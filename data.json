@@ -1,0 +1,7 @@
+{
+  "member":[
+    {"name":"David", "position":"CEO"},
+    {"name":"Emily", "position":"DESIGNER"},
+    {"name":"Michael", "position":"DEVELOPER"}
+  ]
+}
