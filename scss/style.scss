@@ -20,46 +20,47 @@ main {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-    }
-    h2{
-      width: 30%;
-      font: 300 30px/1 "raleway";
-      color: #777;
-    }
-    .txt {
-      width: 38%;
-      display: flex;
-      flex-wrap: wrap;
-      align-content: space-between;
-      font-size: 1rem;
-      word-break: break-all; //단어 단위가 아닌 글자단위로 줄바꿈 처리
 
-      span {
-        font: 300 0.8rem/1 "orbitron";
-        letter-spacing: 1px;
-        color: orange;
-        font-size: 0.8rem;
-
+      h2{
+        width: 30%;
+        font: 300 30px/1 "raleway";
+        color: #777;
       }
-    }
-    .pic {
-      width: 30%;
-      height: 200px;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transform :scale(1.4)
-
+      .txt {
+        width: 38%;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between;
+        font-size: 1rem;
+        word-break: break-all; //단어 단위가 아닌 글자단위로 줄바꿈 처리
+  
+        span {
+          font: 300 0.8rem/1 "orbitron";
+          letter-spacing: 1px;
+          color: orange;
+          font-size: 0.8rem;
+  
+        }
+      }
+      .pic {
+        width: 30%;
+        height: 200px;
+        overflow: hidden;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform :scale(1.4)
+          
+        }
       }
     }
   }
 }
 //태블릿
 //article안쪽의 h2, .txt영역만 가로 절반씩 너비 배치
-//.pic요소는 100%로 변경해서 article 하나당 
+//.pic요소는 100%로 변경해서 article 하나당 두줄 배치 처리 
 @media screen and (max-width:899px){
   main {
     section {
@@ -79,6 +80,8 @@ main {
     }
   }
 }
+//모바일 : h2, .txt. pic모두를 100% 너비설정해서
+//article하나당 3줄씩 설정되게 스타일링
 @media screen and (max-width:599px){
   main {
     section {
