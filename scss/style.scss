@@ -1,3 +1,46 @@
 @import "reset";
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
+main {
+  padding: 10vh 10vw;
+
+  h1 {
+    font: 200 7vw/1 "Raleway";
+    color:#555;
+    margin-bottom: 60px;
+  }
+
+  section {
+    width: 100%;
+
+    article {
+      width: 100%;
+      padding: 50px 0px;
+      border-bottom: 1px solid #bbb;
+      display: flex;
+      justify-content: space-between;
+    }
+    h2{
+      width: 30%
+      
+    }
+    .txt {
+      width: 38%;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-between;
+    }
+    .pic {
+      width: 30%;
+      height: 200px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+      }
+    }
+  }
+
+}

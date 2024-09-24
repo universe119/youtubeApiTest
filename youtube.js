@@ -38,17 +38,21 @@ fetch(url)
 			let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
 
 			tags += `
-        <article>
+      <article>
+        <h2>${title}</h2>
+
+        <div class="txt">
+          <p>${desc}</p>
+          <span>${date}</span>
+        </div>
+        
         <div class="pic">
           <img src="${data.snippet.thumbnails.standard.url}" alt="${data.snippet.title}">
         </div>
-          <h2>${title}</h2>
-          <p>${desc}</p>
-          <span>${date}</span>
-        </article>
+      </article>
       `;
 		});
-		// console.log(tags);
+		console.log(tags);
 		frame.innerHTML = tags;
 	});
 // 미션 : 제목이 60글자넘어가면 ... 말줄이표 처리
