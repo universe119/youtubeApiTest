@@ -25,13 +25,32 @@ fetch(url)
 		let tags = "";
 
 		vidsData.forEach((data) => {
+			let title =
+				data.snippet.title.length > 60
+					? data.snippet.title.substring(0, 60) + "..."
+					: data.snippet.title;
+
+			let desc =
+				data.snippet.description.length > 120
+					? data.snippet.description.substring(0, 120) + "..."
+					: data.snippet.description;
+
+			let span_text = data.snippet.publishedAt;
+
 			tags += `
         <article>
-          <h2>${data.snippet.title}</h2>
-          
+        <div class="pic">
+          <img src="${data.snippet.thumbnails.standard.url}" alt="">
+        </div>
+          <h2>${title}</h2>
+          <p>${desc}</p>
+          <span>${span_text.split("T")[0]}</span>
         </article>
       `;
 		});
 		console.log(tags);
 		frame.innerHTML = tags;
 	});
+// 미션 : 제목이 60글자넘어가면 ... 말줄이표 처리
+// 본문 120글자 넘어가면 ...말줄임표 처리
+// 날짜를 2012.03.12변경
