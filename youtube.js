@@ -7,7 +7,7 @@
 // QueryString : 기본 요청 URL뒤에 문자열형태로 옵션값을 달아서 서버에 요청하는 형태 https://www.abc.com?pwd=1234&name=abc;
 // www.abc.com // 기본 요청 URL
 // ?뒤에 있는 key=value 값 문자열 형태로 지정한 추가 요청사항, 요청사항이 여러개 일때에는 &로 구분
-console.log("youtube");
+// console.log("youtube");
 
 const api_key = "AIzaSyC0YTkwnKAxe7Th6bkOdlmS5uW4auLXs8s";
 const pid = "PLbavOBDiF2ET3lP5KfSAKyfAH-8oVGPQm";
@@ -20,7 +20,7 @@ const frame = document.querySelector("section");
 fetch(url)
 	.then((data) => data.json())
 	.then((json) => {
-		console.log(json);
+		// console.log(json);
 		const vidsData = json.items;
 		let tags = "";
 
@@ -35,20 +35,20 @@ fetch(url)
 					? data.snippet.description.substring(0, 120) + "..."
 					: data.snippet.description;
 
-			let span_text = data.snippet.publishedAt;
+			let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
 
 			tags += `
         <article>
         <div class="pic">
-          <img src="${data.snippet.thumbnails.standard.url}" alt="">
+          <img src="${data.snippet.thumbnails.standard.url}" alt="${data.snippet.title}">
         </div>
           <h2>${title}</h2>
           <p>${desc}</p>
-          <span>${span_text.split("T")[0]}</span>
+          <span>${date}</span>
         </article>
       `;
 		});
-		console.log(tags);
+		// console.log(tags);
 		frame.innerHTML = tags;
 	});
 // 미션 : 제목이 60글자넘어가면 ... 말줄이표 처리
