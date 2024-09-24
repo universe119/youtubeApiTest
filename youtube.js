@@ -15,16 +15,23 @@ const num = 10;
 
 const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${pid}&key=${api_key}&maxResults=${num}`;
 
+const frame = document.querySelector("section");
+
 fetch(url)
-	.then((data) => data.json()) // 문자열의 데이터를 객체나 배열형태로 변환(parsing)
+	.then((data) => data.json())
 	.then((json) => {
-		// parsing 완료된 데이터를 json파라미터명으로 받아서
-		// 해당 코드블록안쪽에서 데이터 활용
 		console.log(json);
-		//자주쓰는 데이터값(snippet)
-		//title : 영상의 제목
-		//description : 영상의 본문
-		//publishedAt : 영상 업로드 날짜
-		//thumbnails.standard.url : 썸네일주소
-		//resourceId.videoId : 추후 영상 호출시 필요한 정보값
+		const vidsData = json.items;
+		let tags = "";
+
+		vidsData.forEach((data) => {
+			tags += `
+        <article>
+          <h2>${data.snippet.title}</h2>
+          
+        </article>
+      `;
+		});
+		console.log(tags);
+		frame.innerHTML = tags;
 	});
