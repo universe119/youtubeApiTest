@@ -41,6 +41,7 @@ fetch(url)
 
 			let date = data.snippet.publishedAt.split("T")[0].split("-").join(".");
 
+			//h2요소에 data-id라는 커스텀 속성을 만들어서 유튜브 영상 id값 숨겨놓음.
 			tags += `
       <article>
         <h2 class="vidTitle" data-id=${data.snippet.resourceId.videoId}>${title}</h2>
@@ -85,11 +86,15 @@ fetch(url)
 
 // 이벤트위임: 항상존재하는 body요소에 일단은 이벤트를 맡겼다가 동적요소가 생성완료되면 body가 대신 이벤트 전달
 
-document.body.addEventListener("click", function (e) {
+//동적 생성요소에 이벤트 연결해서 동적으로 모달요소 추가
+document.body.addEventListener("click", (e) => {
 	// console.log(e.target);
 
 	// body전체에 이벤트를 연결한 뒤 이벤트 발생한 실제대상을 조건문으로 분기처리해서
 	// 조건에 부합될때에만 원하는 구문 연결(이처럼 번거로운작업을 처리하지 않기 위해서 리액트같은 프레임웍, 라이브러리를 사용함)
+
+	//클릭한 대상인 h2요소에 data-id속성으로 숨겨놓은 유튜브 영상 id값을 변수에 옮겨담고
+	//동적으로 생성되는 iframe요소의 src값에 연동
 	const vidId = e.target.getAttribute("data-id");
 	// console.dir(e.target);
 
@@ -121,6 +126,7 @@ document.body.addEventListener("click", function (e) {
 		document.body.append(asideEl);
 	}
 });
+//동적으로 생선된 모달 닫기 버튼에 이벤트 위임
 document.body.addEventListener("click", (e) => {
 	if (e.target.className === "btnClose") {
 		// display=none과는 다르게 물리적으로 DOM자체를 제거
